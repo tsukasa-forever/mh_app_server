@@ -7,6 +7,13 @@ use Cake\Error\ExceptionRenderer;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
 
+define('RDS_HOSTNAME', $_SERVER['RDS_HOSTNAME']);
+define('RDS_HOSTNAME_RO', $_SERVER['RDS_HOSTNAME_RO']);
+define('RDS_USERNAME', $_SERVER['RDS_USERNAME']);
+define('RDS_PASSWORD', $_SERVER['RDS_PASSWORD']);
+define('RDS_DB_NAME', $_SERVER['RDS_DB_NAME']);
+define('REDIS_HOSTNAME', $_SERVER['REDIS_HOSTNAME']);
+
 return [
     /*
      * Debug Level:
@@ -261,7 +268,20 @@ return [
     'Datasources' =>
     [
         'default' => [
-
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Mysql',
+            'persistent' => false,
+            'host' => RDS_HOSTNAME,
+            'username' => RDS_USERNAME,
+            'password' => RDS_PASSWORD,
+            'database' => RDS_DB_NAME,
+            'encoding' => 'utf8mb4',
+            'timezone' => '+09:00',
+            'flags' => [],
+            'cacheMetadata' => true,
+            'log' => false,
+            'quoteIdentifiers' => false,
+            'url' => env('DATABASE_URL', null),
         ],
 
         /*
